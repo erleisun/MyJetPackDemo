@@ -25,8 +25,8 @@ class MainFragment : BaseFragment() {
     }
 
     override fun onDestroyView() {
-        super.onDestroyView()
         Log.d(TAG, "onDestroyView")
+        super.onDestroyView()
     }
 
 
