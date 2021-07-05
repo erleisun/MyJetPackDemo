@@ -4,9 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
-            name="main"
+            name="fragment_main"
             type="com.qinggan.myjetpackdemo.ui.main.MainViewMode" />
     </data>
 

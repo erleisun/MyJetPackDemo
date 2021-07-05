@@ -3,6 +3,9 @@ package com.qinggan.myjetpackdemo.utils
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 
+/**
+ *传入的 Fragment 变量zeng加注解 ,从参数中获取并赋值
+ */
 object ParamsUtil {
 
     /**

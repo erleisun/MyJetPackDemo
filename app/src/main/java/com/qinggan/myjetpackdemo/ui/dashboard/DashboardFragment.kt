@@ -10,8 +10,10 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.qinggan.myjetpackdemo.R
 import com.qinggan.myjetpackdemo.databinding.FragmentDashboardBinding
+import com.qinggan.myjetpackdemo.ui.BaseFragment
+import com.qinggan.myjetpackdemo.ui.base.DataBindingConfig
 
-class DashboardFragment : Fragment() {
+class DashboardFragment : BaseFragment() {
 
     private lateinit var dashboardViewModel: DashboardViewModel
     private var _binding: FragmentDashboardBinding? = null
@@ -41,5 +43,17 @@ class DashboardFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun getLayoutID(): Int? {
+        TODO("Not yet implemented")
+    }
+
+    override fun init(savedInstanceState: Bundle?) {
+        TODO("Not yet implemented")
+    }
+
+    override fun getDataBindingConfig(): DataBindingConfig? {
+        TODO("Not yet implemented")
     }
 }
