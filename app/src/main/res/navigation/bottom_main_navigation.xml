@@ -9,6 +9,18 @@
         android:id="@+id/navigation_main"
         android:name="com.qinggan.myjetpackdemo.ui.main.MainFragment"
         android:label="@string/title_main"
-        tools:layout="@layout/fragment_main" />
+        tools:layout="@layout/fragment_main">
 
+        <action
+            android:id="@+id/action_main_fragment_to_home_fragment"
+            app:destination="@+id/home_fragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/home_fragment"
+        android:name="com.qinggan.myjetpackdemo.ui.home.HomeFragment"
+        android:label="HomeFragment"
+        tools:layout="@layout/fragment_home">
+
+    </fragment>
 </navigation>

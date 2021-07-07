@@ -1,17 +1,11 @@
 package com.qinggan.myjetpackdemo.ui.dashboard
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.TextView
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.qinggan.myjetpackdemo.R
 import com.qinggan.myjetpackdemo.databinding.FragmentDashboardBinding
 import com.qinggan.myjetpackdemo.ui.BaseFragment
 import com.qinggan.myjetpackdemo.ui.base.DataBindingConfig
+import com.qinggan.myjetpackdemo.BR
 
 class DashboardFragment : BaseFragment() {
 
@@ -20,40 +14,23 @@ class DashboardFragment : BaseFragment() {
 
     // This property is only valid between onCreateView and
     // onDestroyView.
-    private val binding get() = _binding!!
-
-    override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
-    ): View? {
-        dashboardViewModel =
-                ViewModelProvider(this).get(DashboardViewModel::class.java)
-
-        _binding = FragmentDashboardBinding.inflate(inflater, container, false)
-        val root: View = binding.root
-
-        val textView: TextView = binding.textDashboard
-        dashboardViewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
-        })
-        return root
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
 
     override fun getLayoutID(): Int? {
-        TODO("Not yet implemented")
+        return R.layout.fragment_dashboard
+
+    }
+
+    override fun initViewModel() {
+        super.initViewModel()
+        dashboardViewModel = getFragmentViewMode(DashboardViewModel::class.java)
     }
 
     override fun init(savedInstanceState: Bundle?) {
-        TODO("Not yet implemented")
+        _binding = mBinding as FragmentDashboardBinding
     }
 
     override fun getDataBindingConfig(): DataBindingConfig? {
-        TODO("Not yet implemented")
+        return DataBindingConfig(R.layout.fragment_dashboard, dashboardViewModel)
+            .addDataBindingParams(BR.fragmentDashboard, dashboardViewModel)
     }
 }

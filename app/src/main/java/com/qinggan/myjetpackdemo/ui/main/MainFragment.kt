@@ -1,11 +1,12 @@
 package com.qinggan.myjetpackdemo.ui.main
 
 import android.os.Bundle
-import android.view.MenuItem
+import android.util.Log
 import androidx.fragment.app.Fragment
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.qinggan.myjetpackdemo.BR
 import com.qinggan.myjetpackdemo.R
+import com.qinggan.myjetpackdemo.commom.doSelect
+import com.qinggan.myjetpackdemo.commom.initFragment
 import com.qinggan.myjetpackdemo.databinding.FragmentMainBinding
 import com.qinggan.myjetpackdemo.ui.BaseFragment
 import com.qinggan.myjetpackdemo.ui.base.DataBindingConfig
@@ -18,6 +19,8 @@ class MainFragment : BaseFragment() {
     companion object {
         val TAG = MainFragment::class.simpleName
     }
+
+    private lateinit var mFragmentMainBinding: FragmentMainBinding
 
     private var fragmentList = arrayListOf<Fragment>()
 
@@ -48,18 +51,40 @@ class MainFragment : BaseFragment() {
     override fun getLayoutID() = R.layout.fragment_main
 
     override fun init(savedInstanceState: Bundle?) {
+        mFragmentMainBinding = mBinding as FragmentMainBinding
 
-        (mBinding as FragmentMainBinding).navView.run {
-            setOnNavigationItemReselectedListener { item ->
+        mFragmentMainBinding.vpHome.initFragment(childFragmentManager, fragmentList).run {
+            offscreenPageLimit = fragmentList.size
+        }
+
+        mFragmentMainBinding.vpHome.doSelect() {
+            mFragmentMainBinding.navView.menu.getItem(it).isChecked = true
+        }
+
+        mFragmentMainBinding.navView.run {
+            setOnNavigationItemSelectedListener { item ->
                 when (item.itemId) {
-                    R.id.navigation_home -> println("click navigation_home")
-                    R.id.navigation_dashboard -> println("click navigation_dashboard")
-                    R.id.navigation_notifications -> println("click navigation_notifications")
-                    else -> println("click others")
+                    R.id.navigation_home -> {
+                        Log.d(TAG, "click navigation_home")
+//                        selectedItemId = item.itemId
+//                            nav().navigate(R.id.home_fragment)
+                        mFragmentMainBinding.vpHome.setCurrentItem(0, false)
+                    }
+                    R.id.navigation_dashboard -> {
+//                        selectedItemId = item.itemId
+                        Log.d(TAG, "click navigation_dashboard")
+                        mFragmentMainBinding.vpHome.setCurrentItem(1, false)
+                    }
+                    R.id.navigation_notifications -> {
+                        Log.d(TAG, "click navigation_notifications")
+                        mFragmentMainBinding.vpHome.setCurrentItem(2, false)
+                    }
+                    else -> Log.d(TAG, "click others")
                 }
                 true
             }
         }
+
     }
 
     override fun getDataBindingConfig(): DataBindingConfig? {

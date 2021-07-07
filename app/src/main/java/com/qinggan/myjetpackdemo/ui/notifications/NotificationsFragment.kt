@@ -1,14 +1,7 @@
 package com.qinggan.myjetpackdemo.ui.notifications
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.TextView
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import com.qinggan.myjetpackdemo.BaseActivity
+import com.qinggan.myjetpackdemo.BR
 import com.qinggan.myjetpackdemo.R
 import com.qinggan.myjetpackdemo.databinding.FragmentNotificationsBinding
 import com.qinggan.myjetpackdemo.ui.BaseFragment
@@ -17,44 +10,29 @@ import com.qinggan.myjetpackdemo.ui.base.DataBindingConfig
 class NotificationsFragment : BaseFragment() {
 
     private lateinit var notificationsViewModel: NotificationsViewModel
-    private var _binding: FragmentNotificationsBinding? = null
+    private lateinit var _binding: FragmentNotificationsBinding
 
     // This property is only valid between onCreateView and
     // onDestroyView.
-    private val binding get() = _binding!!
-
-    override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
-    ): View? {
-        notificationsViewModel =
-                ViewModelProvider(this).get(NotificationsViewModel::class.java)
-
-        _binding = FragmentNotificationsBinding.inflate(inflater, container, false)
-        val root: View = binding.root
-
-        val textView: TextView = binding.textNotifications
-        notificationsViewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
-        })
-        return root
-    }
-
     override fun onDestroyView() {
         super.onDestroyView()
-        _binding = null
     }
 
-    override fun getLayoutID(): Int? {
-        TODO("Not yet implemented")
-    }
+    override fun getLayoutID() = R.layout.fragment_notifications
 
     override fun init(savedInstanceState: Bundle?) {
-        TODO("Not yet implemented")
+        _binding = mBinding as FragmentNotificationsBinding
+        _binding.textNotifications.text = notificationsViewModel._text.value
+
+    }
+
+    override fun initViewModel() {
+        super.initViewModel()
+        notificationsViewModel = getFragmentViewMode(NotificationsViewModel::class.java)
     }
 
     override fun getDataBindingConfig(): DataBindingConfig? {
-        TODO("Not yet implemented")
+        return DataBindingConfig(R.layout.fragment_notifications, notificationsViewModel)
+            .addDataBindingParams(BR.fragmentNotification, notificationsViewModel)
     }
 }

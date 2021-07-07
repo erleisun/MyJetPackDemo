@@ -11,6 +11,8 @@ import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
 import com.qinggan.myjetpackdemo.ui.base.DataBindingConfig
 import com.qinggan.myjetpackdemo.utils.ParamsUtil
 
@@ -64,6 +66,7 @@ abstract class BaseFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        mBinding?.unbind()
         mBinding = null
     }
 
@@ -115,5 +118,9 @@ abstract class BaseFragment : Fragment() {
      * 获取dataBinding配置项
      */
     abstract fun getDataBindingConfig(): DataBindingConfig?
+
+    fun nav():NavController{
+        return NavHostFragment.findNavController(this)
+    }
 
 }
