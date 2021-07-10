@@ -16,6 +16,12 @@ class HomeFragment : BaseFragment() {
     private lateinit var homeViewModel: HomeViewModel
 
 
+    override fun init(savedInstanceState: Bundle?) {
+        mBinding as FragmentHomeBinding
+        (mBinding as FragmentHomeBinding).textHome.text = homeViewModel.text.value
+    }
+
+
     override fun getLayoutID(): Int {
         return R.layout.fragment_home
     }
@@ -23,11 +29,6 @@ class HomeFragment : BaseFragment() {
     override fun initViewModel() {
         super.initViewModel()
         homeViewModel = getFragmentViewMode(HomeViewModel::class.java)
-    }
-
-    override fun init(savedInstanceState: Bundle?) {
-        mBinding as FragmentHomeBinding
-        (mBinding as FragmentHomeBinding).textHome.text = homeViewModel.text.value
     }
 
     override fun getDataBindingConfig(): DataBindingConfig? {
