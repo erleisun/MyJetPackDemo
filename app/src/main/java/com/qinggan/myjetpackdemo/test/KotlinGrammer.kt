@@ -77,6 +77,10 @@ fun test4() {
 
 }
 
+fun <T> T.doWithTry(block: () -> Unit) {
+    block()
+}
+
 
 
 

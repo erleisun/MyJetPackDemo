@@ -2,7 +2,15 @@
 buildscript {
     ext.kotlin_version = "1.5.10"
     repositories {
+//        maven { url "http://10.10.96.219:8081/repository/nj-pateo" }
+//        maven { url "http://10.10.96.219:8081/repository/nj-pateo/qingpay_obu/" }
+//        //南京maven服务器地址
+//        maven { url "http://10.10.96.219:8081/repository/nj-pateo/qingpay_mobile/" }
+//        maven { url 'http://maven.aliyun.com/nexus/content/groups/public' }
+//        maven { url "https://plugins.gradle.org/m2/" }
+//        maven { url 'https://www.jitpack.io' }
         google()
+//        jcenter()
         mavenCentral()
         maven { url "https://jitpack.io" }
     }
@@ -17,6 +25,13 @@ buildscript {
 
 allprojects {
     repositories {
+//        maven { url "http://10.10.96.219:8081/repository/nj-pateo" }
+//        maven { url "http://10.10.96.219:8081/repository/nj-pateo/qingpay_obu/" }
+//        //南京maven服务器地址
+//        maven { url "http://10.10.96.219:8081/repository/nj-pateo/qingpay_mobile/" }
+//        maven { url 'http://maven.aliyun.com/nexus/content/groups/public' }
+//        maven { url "https://plugins.gradle.org/m2/" }
+//        maven { url 'https://www.jitpack.io' }
         google()
         mavenCentral()
         jcenter() // Warning: this repository is going to shut down soon

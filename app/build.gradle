@@ -56,7 +56,17 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
-
     implementation "io.reactivex.rxjava2:rxjava:2.2.14"
+//    recycleView框架
     implementation "com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.50"
+    //智能刷新控件
+    implementation "com.scwang.smartrefresh:SmartRefreshLayout:1.1.0"
+    implementation "com.scwang.smartrefresh:SmartRefreshHeader:1.1.0"
+    //滚动轮播控件
+    implementation "cn.bingoogolapple:bga-banner:2.2.7"
+
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.7"
+    implementation  "com.android.support:multidex:1.0.3"
+    implementation "androidx.viewpager2:viewpager2:1.1.0-alpha01"
+    implementation "androidx.legacy:legacy-support-v4:1.0.0"
 }
