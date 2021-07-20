@@ -1,8 +1,6 @@
 package com.qinggan.myjetpackdemo.test
 
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
 
 fun main() {
@@ -23,18 +21,43 @@ fun main() {
         person.sex = 1
     }
 
-
     launchTest()
+    repeatTest()
 }
 
 fun launchTest() {
     println("start launchTest")
-    GlobalScope.launch { //后台启动一个新的携程并继续
-        println("delay start")
-        delay(2000L)
-        println("delay end")
+    val job = GlobalScope.launch(Dispatchers.IO) { //后台启动一个新的携程并继续
+        val delay = setDelay()
+        println("setDelay = $delay")
     }
     println("end launchTest")
+
+    Thread.sleep(3000L)
+    job.cancel()
+}
+
+suspend fun setDelay(): Long = withContext(Dispatchers.IO) {
+    val delay = 2000L
+    delay(delay)
+
+    return@withContext delay
+}
+
+
+ fun repeatTest() {
+
+    val job = GlobalScope.launch {
+        repeat(1000) { i: Int ->
+            println("repeat $i")
+            delay(500L)
+        }
+    }
+
+    Thread.sleep(3000L)
+    job.cancel()
+//    job.join()
+
 }
 
 

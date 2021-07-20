@@ -6,6 +6,8 @@ import androidx.lifecycle.Observer
 import com.qinggan.myjetpackdemo.BR
 import com.qinggan.myjetpackdemo.R
 import com.qinggan.myjetpackdemo.bean.BannerBean
+import com.qinggan.myjetpackdemo.commom.setNoRepeatClick
+import com.qinggan.myjetpackdemo.commom.smartConfig
 import com.qinggan.myjetpackdemo.databinding.FragmentHomeBinding
 import com.qinggan.myjetpackdemo.ui.BaseFragment
 import com.qinggan.myjetpackdemo.ui.base.DataBindingConfig
@@ -22,6 +24,8 @@ class HomeFragment : BaseFragment() {
     private lateinit var homeViewModel: HomeViewModel
     private lateinit var mFragmentHomeBinding: FragmentHomeBinding
 
+
+
     private fun observe() {
         //监听BannerList数据
         homeViewModel.banner?.observe(this, Observer<MutableList<BannerBean>>() {
@@ -35,10 +39,21 @@ class HomeFragment : BaseFragment() {
     }
 
     private fun initView() {
-//        mFragmentHomeBinding.smartRefresh.setOnRefreshListener() {
-//            Log.d(TAG, "onRefresh")
-//
-//        }
+        mFragmentHomeBinding.smartRefresh.setOnRefreshListener() {
+            Log.d(TAG, "smartRefresh onRefreshListener")
+
+        }
+
+        mFragmentHomeBinding.smartRefresh.setOnLoadMoreListener {
+            //上拉刷新
+            Log.d(TAG, "smartRefresh onLoadMoreListener")
+        }
+        //配置smartRefresh
+        mFragmentHomeBinding.smartRefresh.smartConfig()
+
+        setNoRepeatClick(mFragmentHomeBinding.clTitle) {
+            Log.d(TAG, "clTitle click");
+        }
 
         loadData()
 

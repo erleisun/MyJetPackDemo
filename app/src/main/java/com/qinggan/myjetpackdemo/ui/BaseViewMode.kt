@@ -6,6 +6,8 @@ open class BaseViewMode : ViewModel() {
 
     public fun <T> launch(block: suspend () -> T) {
 
+
+
     }
 
 }
