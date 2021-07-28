@@ -25,7 +25,7 @@ class HomeViewModel : BaseViewMode() {
      */
     fun getBanner() {
         launch {
-//            banner?.value = repo.getBanner()
+            banner?.value = repo.getBanner()
         }
     }
 

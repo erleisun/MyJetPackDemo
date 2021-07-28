@@ -1,12 +1,15 @@
 package com.qinggan.myjetpackdemo.ui.home
 
-class HomeRepo {
+import com.qinggan.myjetpackdemo.http.ApiService
+import com.qinggan.myjetpackdemo.http.BaseRepository
+import com.qinggan.myjetpackdemo.http.RetrofitManager
 
-//    fun getBanner() = withIO{
-//
-//
-//    }
+class HomeRepo : BaseRepository() {
 
-//    GlobalScope.
-
+    //切换到子线程
+    suspend fun getBanner() = withIO {
+        RetrofitManager.getApiService(ApiService::class.java)
+            .getBanner()
+            .onData()
+    }
 }

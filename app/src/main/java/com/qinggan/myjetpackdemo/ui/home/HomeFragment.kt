@@ -41,7 +41,6 @@ class HomeFragment : BaseFragment() {
     private fun initView() {
         mFragmentHomeBinding.smartRefresh.setOnRefreshListener() {
             Log.d(TAG, "smartRefresh onRefreshListener")
-
         }
 
         mFragmentHomeBinding.smartRefresh.setOnLoadMoreListener {
