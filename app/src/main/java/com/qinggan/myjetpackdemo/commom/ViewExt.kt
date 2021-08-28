@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.viewpager.widget.ViewPager
+import com.qinggan.myjetpackdemo.utils.KLog
 import com.scwang.smartrefresh.layout.SmartRefreshLayout
 
 fun ViewPager.initFragment(fragManager: FragmentManager, fragments: MutableList<Fragment>)
@@ -38,8 +39,7 @@ fun ViewPager.doSelect(selected: (Int) -> Unit) {
 
     addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
         override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
-            Log.d("doSelect", "position = $position")
-
+            KLog.d("doSelect", "position = $position")
         }
 
         override fun onPageSelected(position: Int) {

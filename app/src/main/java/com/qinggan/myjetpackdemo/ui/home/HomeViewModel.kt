@@ -5,10 +5,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.qinggan.myjetpackdemo.bean.BannerBean
 import com.qinggan.myjetpackdemo.ui.BaseViewMode
+import com.qinggan.myjetpackdemo.utils.KLog
 
 class HomeViewModel : BaseViewMode() {
 
-    private val repo by lazy { HomeRepo() }
+    private val repo  by lazy { HomeRepo() }
 
     private val textTitle = MutableLiveData<String>().apply {
         value = "首頁"
@@ -24,8 +25,11 @@ class HomeViewModel : BaseViewMode() {
      * 获取Banner数据
      */
     fun getBanner() {
+        KLog.d("HomeViewModel", "getBanner")
         launch {
-            banner?.value = repo.getBanner()
+            KLog.d("HomeViewModel", "launch")
+            repo.getBanner()
+//            banner?.value = repo.getBanner()
         }
     }
 

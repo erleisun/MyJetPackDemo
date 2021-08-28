@@ -3,6 +3,7 @@ package com.qinggan.myjetpackdemo
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import com.qinggan.myjetpackdemo.utils.KLog
 import io.reactivex.Observable
 import io.reactivex.disposables.Disposable
 import java.util.concurrent.TimeUnit
@@ -22,9 +23,9 @@ class SplashActivity : BaseActivity() {
     }
 
     private fun startIntent() {
-        disposable = Observable.timer(3000, TimeUnit.MILLISECONDS)
+        disposable = Observable.timer(1000, TimeUnit.MILLISECONDS)
             .subscribe() {
-                Log.d(TAG, "startActivity")
+                KLog.d(TAG, "startActivity")
                 startActivity(Intent(this, MainActivity::class.java))
                 finish()
             }
@@ -43,7 +44,7 @@ class SplashActivity : BaseActivity() {
     }
 
     override fun init(savedInstanceState: Bundle?) {
-        Log.d(TAG, "init")
+        KLog.d(TAG, "init")
     }
 
 }

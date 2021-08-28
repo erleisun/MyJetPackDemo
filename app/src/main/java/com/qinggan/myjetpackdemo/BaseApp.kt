@@ -1,3 +1,5 @@
+package com.qinggan.myjetpackdemo
+
 import android.app.Application
 
 class BaseApp : Application() {

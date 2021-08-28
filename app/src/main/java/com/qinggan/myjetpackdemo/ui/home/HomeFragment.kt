@@ -11,6 +11,7 @@ import com.qinggan.myjetpackdemo.commom.smartConfig
 import com.qinggan.myjetpackdemo.databinding.FragmentHomeBinding
 import com.qinggan.myjetpackdemo.ui.BaseFragment
 import com.qinggan.myjetpackdemo.ui.base.DataBindingConfig
+import com.qinggan.myjetpackdemo.utils.KLog
 
 class HomeFragment : BaseFragment() {
 
@@ -30,7 +31,7 @@ class HomeFragment : BaseFragment() {
         //监听BannerList数据
         homeViewModel.banner?.observe(this, Observer<MutableList<BannerBean>>() {
             bannerList = it
-            Log.d(TAG, "bannerList = $bannerList")
+            KLog.d(TAG, "bannerList = $bannerList")
         })
     }
 
@@ -40,18 +41,18 @@ class HomeFragment : BaseFragment() {
 
     private fun initView() {
         mFragmentHomeBinding.smartRefresh.setOnRefreshListener() {
-            Log.d(TAG, "smartRefresh onRefreshListener")
+            KLog.d(TAG, "smartRefresh onRefreshListener")
         }
 
         mFragmentHomeBinding.smartRefresh.setOnLoadMoreListener {
             //上拉刷新
-            Log.d(TAG, "smartRefresh onLoadMoreListener")
+            KLog.d(TAG, "smartRefresh onLoadMoreListener")
         }
         //配置smartRefresh
         mFragmentHomeBinding.smartRefresh.smartConfig()
 
         setNoRepeatClick(mFragmentHomeBinding.clTitle) {
-            Log.d(TAG, "clTitle click");
+            KLog.d(TAG, "clTitle click");
         }
 
         loadData()
@@ -59,6 +60,7 @@ class HomeFragment : BaseFragment() {
     }
 
     private fun loadData() {
+        KLog.d(TAG,"loadData")
         homeViewModel.getBanner()
     }
 

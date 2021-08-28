@@ -1,10 +1,10 @@
 package com.qinggan.myjetpackdemo.ui
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.qinggan.myjetpackdemo.commom.toast
 import com.qinggan.myjetpackdemo.http.ApiException
+import com.qinggan.myjetpackdemo.utils.KLog
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -19,9 +19,10 @@ open class BaseViewMode : ViewModel() {
     fun <T> launch(block: suspend () -> T) {
         viewModelScope.launch {
             runCatching {
+                KLog.d("BaseViewMode", "launch")
                 block()
             }.onFailure {
-                Log.d("BaseViewMode", "onFailure")
+                KLog.d("BaseViewMode", "onFailure")
                 it.printStackTrace()
                 getApiException(it).apply {
                     withContext(Dispatchers.Main) {

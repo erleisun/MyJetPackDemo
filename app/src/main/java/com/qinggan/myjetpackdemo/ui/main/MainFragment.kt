@@ -13,6 +13,7 @@ import com.qinggan.myjetpackdemo.ui.base.DataBindingConfig
 import com.qinggan.myjetpackdemo.ui.dashboard.DashboardFragment
 import com.qinggan.myjetpackdemo.ui.home.HomeFragment
 import com.qinggan.myjetpackdemo.ui.notifications.NotificationsFragment
+import com.qinggan.myjetpackdemo.utils.KLog
 
 class MainFragment : BaseFragment() {
 
@@ -65,21 +66,21 @@ class MainFragment : BaseFragment() {
             setOnNavigationItemSelectedListener { item ->
                 when (item.itemId) {
                     R.id.navigation_home -> {
-                        Log.d(TAG, "click navigation_home")
+                        KLog.d(TAG, "click navigation_home")
 //                        selectedItemId = item.itemId
 //                            nav().navigate(R.id.home_fragment)
                         mFragmentMainBinding.vpHome.setCurrentItem(0, false)
                     }
                     R.id.navigation_dashboard -> {
 //                        selectedItemId = item.itemId
-                        Log.d(TAG, "click navigation_dashboard")
+                        KLog.d(TAG, "click navigation_dashboard")
                         mFragmentMainBinding.vpHome.setCurrentItem(1, false)
                     }
                     R.id.navigation_notifications -> {
-                        Log.d(TAG, "click navigation_notifications")
+                        KLog.d(TAG, "click navigation_notifications")
                         mFragmentMainBinding.vpHome.setCurrentItem(2, false)
                     }
-                    else -> Log.d(TAG, "click others")
+                    else -> KLog.d(TAG, "click others")
                 }
                 true
             }
