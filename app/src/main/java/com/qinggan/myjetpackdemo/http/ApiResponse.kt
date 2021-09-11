@@ -1,16 +1,10 @@
 package com.qinggan.myjetpackdemo.http
 
-import android.util.Log
-import com.qinggan.myjetpackdemo.utils.KLog
 import java.io.Serializable
 
 class ApiResponse<T> : Serializable {
 
-    companion object {
-        var TAG = ApiException::class.java.simpleName
-    }
-
-    var data: T? = null
+    private var data: T? = null
 
     /**
      * 业务信息
@@ -22,18 +16,28 @@ class ApiResponse<T> : Serializable {
      */
     private var errorCode = 0
 
-    fun onData(): T? {
-        KLog.d(TAG, "errorCode = $errorCode  errorMsg = $errorMsg")
+    /**
+     * 如果服务端data肯定不为null，直接将data返回。
+     * 假如data为null证明服务端出错,这种错误已经产生并且不可逆，
+     * 客户端只需保证不闪退并给予提示即可
+     */
+    fun data(): T {
         when (errorCode) {
+            //请求成功
             0, 200 -> {
-                return data
+                return data!!
             }
+            //未登陆请求需要用户信息的接口
+            -1001 -> {
+                throw ApiException(errorMsg, errorCode)
+            }
+            //登录失败
             -1 -> {
-                throw ApiException(errorCode, errorMsg)
+                throw ApiException(errorMsg, errorCode)
             }
         }
-
-        throw ApiException(errorCode, errorMsg)
+        //其他错误
+        throw ApiException(errorMsg, errorCode)
     }
 
     /**
@@ -52,15 +56,15 @@ class ApiResponse<T> : Serializable {
             }
             //未登陆请求需要用户信息的接口
             -1001 -> {
-                throw ApiException(errorCode, errorMsg)
+                throw ApiException(errorMsg, errorCode)
             }
             //登录失败
             -1 -> {
-                throw ApiException(errorCode, errorMsg)
+                throw ApiException(errorMsg, errorCode)
             }
         }
         //其他错误
-        throw ApiException(errorCode, errorMsg)
+        throw ApiException(errorMsg, errorCode)
     }
 
 }

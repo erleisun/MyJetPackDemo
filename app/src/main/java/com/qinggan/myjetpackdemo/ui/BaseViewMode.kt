@@ -1,10 +1,12 @@
 package com.qinggan.myjetpackdemo.ui
 
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.qinggan.myjetpackdemo.commom.toast
 import com.qinggan.myjetpackdemo.http.ApiException
 import com.qinggan.myjetpackdemo.utils.KLog
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -16,7 +18,23 @@ import java.net.UnknownHostException
 
 open class BaseViewMode : ViewModel() {
 
-    fun <T> launch(block: suspend () -> T) {
+    /**
+     * 错误信息liveData
+     */
+    val errorLiveData = MutableLiveData<ApiException>()
+
+    /**
+     * 无更多数据
+     */
+    val footLiveDate = MutableLiveData<Any>()
+
+    /**
+     * 无数据
+     */
+    val emptyLiveDate = MutableLiveData<Any>()
+
+
+    protected fun <T> launch(block: suspend () -> T) {
         viewModelScope.launch {
             runCatching {
                 KLog.d("BaseViewMode", "launch")
@@ -25,35 +43,49 @@ open class BaseViewMode : ViewModel() {
                 KLog.d("BaseViewMode", "onFailure")
                 it.printStackTrace()
                 getApiException(it).apply {
-                    withContext(Dispatchers.Main) {
+                    withContext(Dispatchers.Main){
                         toast(errorMessage)
+                        //统一响应错误信息
+//                        errorLiveData.value = this@apply
                     }
                 }
             }
         }
     }
 
+    /**
+     * 捕获异常信息
+     */
     private fun getApiException(e: Throwable): ApiException {
         return when (e) {
             is UnknownHostException -> {
-                ApiException(-1, "UnknownHostException")
+                ApiException("网络异常", -100)
             }
-            is JSONException -> {
-                ApiException(100, "JSONException")
+            is JSONException -> {//|| e is JsonParseException
+                ApiException("数据异常", -100)
             }
             is SocketTimeoutException -> {
-                ApiException(101, "SocketTimeoutException")
+                ApiException("连接超时", -100)
             }
             is ConnectException -> {
-                ApiException(102, "连接错误")
+                ApiException("连接错误", -100)
             }
             is HttpException -> {
-                ApiException(103, "http code ${e.code()}")
+                ApiException("http code ${e.code()}", -100)
             }
             is ApiException -> {
                 e
             }
-            else -> ApiException(104, "unKnow exception")
+            /**
+             * 如果协程还在运行，个别机型退出当前界面时，viewModel会通过抛出CancellationException，
+             * 强行结束协程，与java中InterruptException类似，所以不必理会,只需将toast隐藏即可
+             */
+            is CancellationException -> {
+                ApiException("", -10)
+            }
+            else -> {
+                ApiException("未知错误", -100)
+            }
         }
     }
 

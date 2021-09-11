@@ -7,12 +7,10 @@ import com.qinggan.myjetpackdemo.utils.KLog
 
 class HomeRepo : BaseRepository() {
 
-    //切换到子线程
     suspend fun getBanner() = withIO {
-        KLog.d("HomeRepo","getApiService")
         RetrofitManager.getApiService(ApiService::class.java)
             .getBanner()
-//            .onData()
+            .data()
     }
 
 }

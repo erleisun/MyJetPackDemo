@@ -1,3 +1,3 @@
 package com.qinggan.myjetpackdemo.http
 
-class ApiException(var errorCode: Int, var errorMessage: String) : Throwable()
+class ApiException(var errorMessage: String, var errorCode: Int) : Throwable()
