@@ -16,7 +16,6 @@ open class BaseRepository {
     suspend fun <T> withIO(block: suspend () -> T): T {
         KLog.d("BaseRepository", "withContext")
         return withContext(Dispatchers.IO) {
-            KLog.d("BaseRepository", "withContext")
             block.invoke()
         }
     }

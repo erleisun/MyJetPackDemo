@@ -25,12 +25,20 @@ class HomeViewModel : BaseViewMode() {
      * 获取Banner数据
      */
     fun getBanner() {
-        KLog.d("HomeViewModel", "getBanner")
         launch {
-            KLog.d("HomeViewModel", "launch")
-            repo.getBanner()
-//            banner?.value = repo.getBanner()
+            KLog.d("HomeViewModel", "launch getBanner")
+//            repo.getBanner()
+
+            banner?.value = repo.getBanner()
+
+            KLog.d("HomeViewModel", "launch getBanner end")
+            test()
         }
+
+    }
+
+    private fun test(){
+
     }
 
 }

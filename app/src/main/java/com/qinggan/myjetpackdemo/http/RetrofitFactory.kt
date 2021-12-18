@@ -37,7 +37,7 @@ object RetrofitFactory {
     }
 
     private fun getLogInterceptor(): Interceptor {
-        return HttpLoggingInterceptor("zsOkhttp").apply {
+        return HttpLoggingInterceptor("MyJetPack").apply {
             setPrintLevel(HttpLoggingInterceptor.Level.BODY)
             setColorLevel(Level.INFO)
         }
