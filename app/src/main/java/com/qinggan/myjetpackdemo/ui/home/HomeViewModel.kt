@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.qinggan.myjetpackdemo.bean.BannerBean
+import com.qinggan.myjetpackdemo.http.ApiResponse
 import com.qinggan.myjetpackdemo.ui.BaseViewMode
 import com.qinggan.myjetpackdemo.utils.KLog
 
@@ -19,7 +20,8 @@ class HomeViewModel : BaseViewMode() {
     /**
      * 滚动的liveData数据
      */
-    var banner: MutableLiveData<MutableList<BannerBean>>? = null
+    private var banner: MutableLiveData<MutableList<BannerBean>> = MutableLiveData<MutableList<BannerBean>>()
+    var _banner : LiveData<MutableList<BannerBean>> = banner
 
     /**
      * 获取Banner数据
@@ -27,18 +29,10 @@ class HomeViewModel : BaseViewMode() {
     fun getBanner() {
         launch {
             KLog.d("HomeViewModel", "launch getBanner")
-//            repo.getBanner()
-
-            banner?.value = repo.getBanner()
-
-            KLog.d("HomeViewModel", "launch getBanner end")
-            test()
+            banner.value = repo.getBanner()
+//            val result: MutableList<BannerBean> = repo.getBanner()
+            KLog.d("HomeViewModel", "launch getBanner end ${banner.value!!.size}")
         }
-
-    }
-
-    private fun test(){
-
     }
 
 }

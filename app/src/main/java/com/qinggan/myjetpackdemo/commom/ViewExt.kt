@@ -10,8 +10,7 @@ import androidx.viewpager.widget.ViewPager
 import com.qinggan.myjetpackdemo.utils.KLog
 import com.scwang.smartrefresh.layout.SmartRefreshLayout
 
-fun ViewPager.initFragment(fragManager: FragmentManager, fragments: MutableList<Fragment>)
-        : ViewPager {
+fun ViewPager.initFragment(fragManager: FragmentManager, fragments: MutableList<Fragment>): ViewPager {
 
     adapter =
         object : FragmentStatePagerAdapter(fragManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {

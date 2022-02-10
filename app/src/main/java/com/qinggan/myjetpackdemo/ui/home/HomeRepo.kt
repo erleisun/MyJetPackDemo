@@ -8,9 +8,10 @@ import com.qinggan.myjetpackdemo.utils.KLog
 class HomeRepo : BaseRepository() {
 
     suspend fun getBanner() = withIO {
-        RetrofitManager.getApiService(ApiService::class.java)
-            .getBanner()
-            .data()
-    }
+            KLog.d("getBanner RetrofitManager getApiService")
+            RetrofitManager.getApiService(ApiService::class.java)
+                .getBanner()
+                .data()
+        }
 
 }

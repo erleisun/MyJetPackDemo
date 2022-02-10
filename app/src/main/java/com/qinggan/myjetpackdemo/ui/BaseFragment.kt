@@ -62,7 +62,15 @@ abstract class BaseFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         init(savedInstanceState)
+        observe()
 5    }
+
+    /**
+     * 注册观察者
+     */
+    open fun observe() {
+
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()

@@ -31,17 +31,19 @@ class MainFragment : BaseFragment() {
     //传入Fragment带参数 type = 1
     private val dashboardFragment by lazy {
         DashboardFragment().apply {
-            arguments = Bundle().apply { putInt("type", 1) }
+            arguments = Bundle().apply {
+                putInt("type", 1)
+            }
         }
     }
 
     private val notificationsFragment by lazy { NotificationsFragment() }
 
     init {
-        fragmentList.apply {
-            fragmentList.add(homeFragment)
-            fragmentList.add(dashboardFragment)
-            fragmentList.add(notificationsFragment)
+        fragmentList.let {
+            it.add(homeFragment)
+            it.add(dashboardFragment)
+            it.add(notificationsFragment)
         }
     }
 

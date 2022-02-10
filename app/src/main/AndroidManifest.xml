@@ -13,6 +13,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyJetPackDemo"
+        android:networkSecurityConfig="@xml/network_security_config"
         tools:ignore="MissingClass">
         <activity
             android:name=".MainActivity"

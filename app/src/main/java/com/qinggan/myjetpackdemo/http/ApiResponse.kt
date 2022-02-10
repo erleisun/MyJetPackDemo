@@ -1,8 +1,14 @@
 package com.qinggan.myjetpackdemo.http
 
+import android.util.Log
+import com.qinggan.myjetpackdemo.utils.KLog
 import java.io.Serializable
 
 class ApiResponse<T> : Serializable {
+
+    companion object{
+        val TAG: String = ApiResponse::class.java.simpleName
+    }
 
     private var data: T? = null
 
@@ -22,6 +28,7 @@ class ApiResponse<T> : Serializable {
      * 客户端只需保证不闪退并给予提示即可
      */
     fun data(): T {
+        KLog.d(TAG,"get data errorCode is $errorCode errorMsg = $errorMsg data = $data")
         when (errorCode) {
             //请求成功
             0, 200 -> {
