@@ -1,6 +1,5 @@
 package com.qinggan.myjetpackdemo.http
 
-import android.util.Log
 import com.qinggan.myjetpackdemo.utils.KLog
 import java.io.Serializable
 

@@ -1,10 +1,9 @@
 package com.qinggan.myjetpackdemo.ui.home
 
+import android.app.Activity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.ImageView
-import android.widget.ViewSwitcher
 import androidx.lifecycle.Observer
 import cn.bingoogolapple.bgabanner.BGABanner
 import com.qinggan.myjetpackdemo.BR
@@ -15,10 +14,12 @@ import com.qinggan.myjetpackdemo.commom.setNoRepeatClick
 import com.qinggan.myjetpackdemo.commom.smartConfig
 import com.qinggan.myjetpackdemo.databinding.FragmentHomeBinding
 import com.qinggan.myjetpackdemo.ui.BaseFragment
+import com.qinggan.myjetpackdemo.ui.adapter.ArticleAdapter
 import com.qinggan.myjetpackdemo.ui.base.DataBindingConfig
 import com.qinggan.myjetpackdemo.utils.KLog
 
-class HomeFragment : BaseFragment() ,BGABanner.Adapter<ImageView?,String?>,BGABanner.Delegate<ImageView?,String?>{
+class HomeFragment : BaseFragment(), BGABanner.Adapter<ImageView?, String?>,
+    BGABanner.Delegate<ImageView?, String?> {
 
     companion object {
         val TAG = HomeFragment::class.java.simpleName
@@ -29,24 +30,29 @@ class HomeFragment : BaseFragment() ,BGABanner.Adapter<ImageView?,String?>,BGABa
 
     private lateinit var homeViewModel: HomeViewModel
     private lateinit var mFragmentHomeBinding: FragmentHomeBinding
+    private val adapter by lazy { ArticleAdapter(mActivity) }
 
     override fun observe() {
         //监听BannerList数据
-        homeViewModel._banner.observe(this, Observer<MutableList<BannerBean>>() {
+        homeViewModel.banner.observe(this, Observer<MutableList<BannerBean>>() {
             bannerList = it
             KLog.d(TAG, "bannerList = ${bannerList!!.size}")
             initBanner()
         })
+
+        homeViewModel._articles.observe(this) {
+            adapter.submitList(it)
+        }
     }
 
     /**
      * 给banner控件赋值
      */
     private fun initBanner() {
-        mFragmentHomeBinding.banner.apply{
+        mFragmentHomeBinding.banner.apply {
             setAutoPlayAble(true)
 
-            var views:MutableList<View> = ArrayList()
+            val views: MutableList<View> = ArrayList()
             bannerList?.forEach { _ ->
                 views.add(ImageView(mActivity).apply {
                     setBackgroundResource(R.drawable.ic_launcher_background)
@@ -75,13 +81,21 @@ class HomeFragment : BaseFragment() ,BGABanner.Adapter<ImageView?,String?>,BGABa
             KLog.d(TAG, "clTitle click");
         }
 
+        adapter.apply {
+            mFragmentHomeBinding.rvHomeList.adapter = this
+            //TODO item点击事件
+
+            //TODO item中子but的点击事件
+        }
+
         loadData()
 
     }
 
     private fun loadData() {
-        KLog.d(TAG,"loadData")
+        KLog.d(TAG, "loadData")
         homeViewModel.getBanner()
+        homeViewModel.getArticle()
     }
 
     override fun init(savedInstanceState: Bundle?) {
@@ -110,13 +124,13 @@ class HomeFragment : BaseFragment() ,BGABanner.Adapter<ImageView?,String?>,BGABa
     override fun fillBannerItem(banner: BGABanner?, itemView: ImageView?, model: String?, position: Int) {
         itemView?.apply {
             scaleType = ImageView.ScaleType.CENTER
-            loadUrl(mActivity,bannerList?.get(position)?.imagePath!!)
+            loadUrl(mActivity, bannerList?.get(position)?.imagePath!!)
 
         }
     }
 
     override fun onBannerItemClick(banner: BGABanner?, itemView: ImageView?, model: String?, position: Int) {
-        TODO("Not yet implemented")
+        //TODO("Not yet implemented")
     }
 
 }

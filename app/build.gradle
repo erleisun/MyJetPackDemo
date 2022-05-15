@@ -7,7 +7,8 @@ apply plugin: "kotlin-kapt"
 
 android {
     compileSdkVersion 30
-
+    buildToolsVersion '28.0.3'
+    ndkVersion '21.0.6113669'
     defaultConfig {
         applicationId "com.qinggan.myjetpackdemo"
         minSdkVersion 28
@@ -39,6 +40,7 @@ android {
         //noinspection DataBindingWithoutKapt
         enabled = true
     }
+
 }
 
 dependencies {

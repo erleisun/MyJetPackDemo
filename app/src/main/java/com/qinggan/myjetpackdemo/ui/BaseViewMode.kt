@@ -33,9 +33,10 @@ open class BaseViewMode : ViewModel() {
      */
     val emptyLiveDate = MutableLiveData<Any>()
 
-
+    /**
+     * 封装一个viewMode的协程
+     */
     protected fun <T> launch(block: suspend () -> T) {
-
         //ViewMode中自带了一个声明周期和ViewMode一样的 ViewModeScope
         viewModelScope.launch {
             runCatching {
@@ -45,7 +46,7 @@ open class BaseViewMode : ViewModel() {
                 KLog.e("BaseViewMode", "onFailure ${it.message}")
                 it.printStackTrace()
                 getApiException(it).apply {
-                    withContext(Dispatchers.Main){
+                    withContext(Dispatchers.Main) {
                         toast(errorMessage)
                         //统一响应错误信息
 //                        errorLiveData.value = this@apply
@@ -59,7 +60,7 @@ open class BaseViewMode : ViewModel() {
      * 捕获异常信息
      */
     private fun getApiException(e: Throwable): ApiException {
-        KLog.e("BaseViewMode","getApiException = ${e.message}" )
+        KLog.e("BaseViewMode", "getApiException = ${e.message}")
         return when (e) {
             is UnknownHostException -> {
                 ApiException("网络异常", -100)

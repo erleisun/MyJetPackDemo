@@ -1,6 +1,7 @@
 package com.qinggan.myjetpackdemo.bean
 
 import com.chad.library.adapter.base.entity.MultiItemEntity
+import com.qinggan.myjetpackdemo.constants.DescConstants
 
 class ArticleBean {
 
@@ -22,10 +23,13 @@ class ArticleBean {
     var total = 0
     var datas: MutableList<DataBean>? = null
 
-
     class DataBean : MultiItemEntity {
         override fun getItemType(): Int {
-            return 0
+            return if (envelopePic.isNullOrEmpty()) {
+                DescConstants.ITEM_ARTICLE
+            } else {
+                DescConstants.ITEM_ARTICLE_PIC
+            }
         }
 
         /**

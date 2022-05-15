@@ -85,3 +85,19 @@ fun View.onIntervalClick(interval: Int, onClick: () -> Unit) {
     lastTime = curTime
     onClick()
 }
+
+/**
+ * 防止重复点击
+ */
+private var viewLastClick = 0L
+fun View.clickNoRepeat(interval: Long = 500, onClick: (view: View) -> Unit) {
+    setOnClickListener {
+        val curTime = System.currentTimeMillis()
+        if (curTime - viewLastClick < interval) {
+            return@setOnClickListener
+        }
+
+        viewLastClick = curTime
+        onClick(it)
+    }
+}

@@ -22,7 +22,6 @@
             android:background="?attr/main_bg_1"
             tools:context=".ui.home.HomeFragment">
 
-
             <TextView
                 android:id="@+id/text_home"
                 style="@style/text_title"
