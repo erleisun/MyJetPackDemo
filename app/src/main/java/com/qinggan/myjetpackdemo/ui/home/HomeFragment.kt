@@ -1,6 +1,5 @@
 package com.qinggan.myjetpackdemo.ui.home
 
-import android.app.Activity
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
@@ -86,6 +85,11 @@ class HomeFragment : BaseFragment(), BGABanner.Adapter<ImageView?, String?>,
             //TODO item点击事件
 
             //TODO item中子but的点击事件
+            setOnItemChildClickListener { position, view ->
+                when (view.id) {
+                    R.id.ivCollect -> KLog.d("click collect $position  and ${currentList[position]}")
+                }
+            }
         }
 
         loadData()

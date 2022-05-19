@@ -4,11 +4,13 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.qinggan.myjetpackdemo.R
 import com.qinggan.myjetpackdemo.bean.ArticleListBean
+import com.qinggan.myjetpackdemo.commom.clickNoRepeat
 import com.qinggan.myjetpackdemo.commom.getArticleDiff
 import com.qinggan.myjetpackdemo.constants.DescConstants
 import com.qinggan.myjetpackdemo.databinding.ItemHomeArticleBinding
@@ -19,10 +21,19 @@ import com.qinggan.myjetpackdemo.utils.KLog
 class ArticleAdapter(private val context: Context) :
     ListAdapter<ArticleListBean, RecyclerView.ViewHolder>(getArticleDiff()) {
 
+    /**
+     * 定义常量其实是一个函数
+     */
+    private var onItemChildClickListener: ((Int, View) -> Unit)? = null
+
+    fun setOnItemChildClickListener(itemClick: ((Int, View) -> Unit)?) {
+        onItemChildClickListener = itemClick
+    }
+
     //创建ViewHolder 并且与dataBinding绑定
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
 
-        return if (viewType == DescConstants.ITEM_ARTICLE) {
+        return if (viewType == DescConstants.ITEM_ARTICLE_PIC) {
             val binding: ItemProjectBinding = DataBindingUtil.inflate(LayoutInflater.from(context),
                 R.layout.item_project,
                 parent,
@@ -40,11 +51,18 @@ class ArticleAdapter(private val context: Context) :
 
     //数据和UI进行绑定
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+
+
+        holder.itemView.findViewById<ImageView>(R.id.ivCollect)?.clickNoRepeat {
+            onItemChildClickListener?.invoke(position, it)
+        }
+
         val binding = if (holder is ArticleViewHolder) {
             DataBindingUtil.getBinding<ItemHomeArticleBinding>(holder.itemView)?.apply {
                 dataBean = getItem(position)
                 KLog.d("home dataBean = $dataBean")
             }
+
         } else {
             DataBindingUtil.getBinding<ItemProjectBinding>(holder.itemView)?.apply {
                 dataBean = getItem(position)
@@ -72,7 +90,7 @@ class ArticleAdapter(private val context: Context) :
     }
 
     override fun submitList(list: List<ArticleListBean>?) {
-        KLog.d("submitList = $list")
+//        KLog.d("submitList = $list")
         val dataList = if (list == null) {
             mutableListOf()
         } else {

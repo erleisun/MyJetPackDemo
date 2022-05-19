@@ -34,7 +34,6 @@ class HomeViewModel : BaseViewMode() {
         launch {
             KLog.d("HomeViewModel", "launch getBanner")
             banner.postValue(repo.getBanner())
-            KLog.d("HomeViewModel", "launch getBanner end ${banner.value!!.size}")
         }
     }
 

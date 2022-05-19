@@ -1,91 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
             name="dataBean"
             type="com.qinggan.myjetpackdemo.bean.ArticleListBean" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <RelativeLayout
+        android:id="@+id/root"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/ripple_bg"
-        android:paddingTop="16dp">
+        android:paddingTop="@dimen/padding">
 
-
-        <ImageView
-            android:id="@+id/ivTitle"
-            android:layout_width="96dp"
-            android:layout_height="96dp"
-            android:layout_marginStart="16dp"
-            android:scaleType="center"
-            app:layout_constraintBottom_toTopOf="@+id/guideline"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:srcCompat="@tools:sample/avatars" />
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline"
+        <TextView
+            android:id="@+id/tvTag"
+            style="@style/text_3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_begin="148dp" />
+            android:layout_marginLeft="@dimen/padding"
+            android:text="@{dataBean.topTitle}"
+            android:textColor="@color/red"
+            tools:text="置顶 " />
+
+        <TextView
+            android:id="@+id/tvAuthor"
+            style="@style/text_3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/tvTag"
+            android:text="@{dataBean.author}"
+            tools:text="鸿洋" />
+
+        <TextView
+            android:id="@+id/tvDate"
+            style="@style/text_3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/padding"
+            android:text="@{dataBean.date}"
+            tools:text="2020-03-08" />
 
         <TextView
             android:id="@+id/tvTitle"
             style="@style/text_1"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="32dp"
-            android:text="TextView"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/ivTitle"
-            tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteY="28dp"
-            tools:text="标题" />
+            android:layout_below="@+id/tvDate"
+            android:layout_marginLeft="@dimen/padding"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="@dimen/padding"
+            android:maxLines="3"
+            android:text="@{dataBean.title}"
+            tools:text="item home article" />
 
         <TextView
-            android:id="@+id/tvDes"
-            style="@style/text_2"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="TextView"
-            app:layout_constraintEnd_toEndOf="@+id/tvTitle"
-            app:layout_constraintStart_toStartOf="@+id/tvTitle"
-            tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteY="59dp"
-            tools:text="描述" />
-
-        <TextView
-            android:id="@+id/tvNameData"
+            android:id="@+id/tvChapterName"
             style="@style/text_3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="TextView"
-            app:layout_constraintBottom_toTopOf="@+id/guideline"
-            app:layout_constraintStart_toStartOf="@+id/tvDes"
-            app:layout_constraintTop_toBottomOf="@+id/tvDes" />
+            android:layout_below="@+id/tvTitle"
+            android:layout_marginLeft="@dimen/padding"
+            android:layout_marginTop="10dp"
+            android:text="@{dataBean.articleTag}"
+            tools:text="开发环境" />
 
         <ImageView
             android:id="@+id/ivCollect"
-            android:scaleType="centerCrop"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@+id/guideline"
-            app:layout_constraintTop_toBottomOf="@+id/tvDes"
-            app:srcCompat="@drawable/ic_notifications_black_24dp"
-            tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteX="355dp" />
+            articleCollect="@{dataBean.collect}"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignTop="@+id/tvChapterName"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/padding"
+            android:padding="5dp" />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="2dp"
-            android:background="?attr/division_line"
-            app:layout_constraintTop_toTopOf="@+id/guideline" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            android:layout_below="@+id/tvChapterName"
+            android:layout_marginTop="@dimen/padding"
+            android:background="?attr/division_line" />
+    </RelativeLayout>
 </layout>

@@ -58,7 +58,7 @@
 
         <item name="division_line">#EDEDED</item>
 
-        <item name="android:navigationBarColor">#ffffff</item>
+        <item name="android:navigationBarColor">#ff0000</item>
 
 
     </style>
