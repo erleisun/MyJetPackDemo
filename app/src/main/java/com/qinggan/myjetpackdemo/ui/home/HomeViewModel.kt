@@ -6,12 +6,15 @@ import androidx.lifecycle.viewModelScope
 import com.qinggan.myjetpackdemo.bean.ArticleListBean
 import com.qinggan.myjetpackdemo.bean.BannerBean
 import com.qinggan.myjetpackdemo.ui.BaseViewMode
+import com.qinggan.myjetpackdemo.ui.common.CollectRequest
 import com.qinggan.myjetpackdemo.utils.KLog
 import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 
 class HomeViewModel : BaseViewMode() {
 
     private val repo by lazy { HomeRepo() }
+    private val collectRequest by lazy { CollectRequest(articles) }
 
     private val textTitle = MutableLiveData<String>().apply {
         value = "首頁"
@@ -25,7 +28,7 @@ class HomeViewModel : BaseViewMode() {
         MutableLiveData<MutableList<BannerBean>>()
 
 
-    var _articles: MutableLiveData<MutableList<ArticleListBean>> = MutableLiveData()
+    var articles: MutableLiveData<MutableList<ArticleListBean>> = MutableLiveData()
 
     /**
      * 获取Banner数据
@@ -56,7 +59,19 @@ class HomeViewModel : BaseViewMode() {
             list.addAll(topArticles.await())
             list.addAll(articles.await())
 
-            _articles.postValue(list)
+            this.articles.postValue(list)
+        }
+    }
+
+    fun collect(articleID: Int) {
+        launch {
+            collectRequest.collect(articleID)
+        }
+    }
+
+    fun unCollect(articleID: Int) {
+        viewModelScope.launch {
+            collectRequest.unCollect(articleID)
         }
     }
 

@@ -1,7 +1,6 @@
 package com.qinggan.myjetpackdemo.ui.main
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import com.qinggan.myjetpackdemo.BR
 import com.qinggan.myjetpackdemo.R

@@ -15,6 +15,7 @@ import com.qinggan.myjetpackdemo.databinding.FragmentHomeBinding
 import com.qinggan.myjetpackdemo.ui.BaseFragment
 import com.qinggan.myjetpackdemo.ui.adapter.ArticleAdapter
 import com.qinggan.myjetpackdemo.ui.base.DataBindingConfig
+import com.qinggan.myjetpackdemo.utils.CacheUtils
 import com.qinggan.myjetpackdemo.utils.KLog
 
 class HomeFragment : BaseFragment(), BGABanner.Adapter<ImageView?, String?>,
@@ -29,7 +30,7 @@ class HomeFragment : BaseFragment(), BGABanner.Adapter<ImageView?, String?>,
 
     private lateinit var homeViewModel: HomeViewModel
     private lateinit var mFragmentHomeBinding: FragmentHomeBinding
-    private val adapter by lazy { ArticleAdapter(mActivity) }
+    private val articleAdapter by lazy { ArticleAdapter(mActivity) }
 
     override fun observe() {
         //监听BannerList数据
@@ -39,8 +40,8 @@ class HomeFragment : BaseFragment(), BGABanner.Adapter<ImageView?, String?>,
             initBanner()
         })
 
-        homeViewModel._articles.observe(this) {
-            adapter.submitList(it)
+        homeViewModel.articles.observe(this) {
+            articleAdapter.submitList(it)
         }
     }
 
@@ -80,14 +81,28 @@ class HomeFragment : BaseFragment(), BGABanner.Adapter<ImageView?, String?>,
             KLog.d(TAG, "clTitle click");
         }
 
-        adapter.apply {
+        articleAdapter.apply {
             mFragmentHomeBinding.rvHomeList.adapter = this
             //TODO item点击事件
 
             //TODO item中子but的点击事件
             setOnItemChildClickListener { position, view ->
                 when (view.id) {
-                    R.id.ivCollect -> KLog.d("click collect $position  and ${currentList[position]}")
+                    R.id.ivCollect -> {
+                        KLog.d("click collect $position  and ${currentList[position].collect}")
+                        if (CacheUtils.isLogin()) {
+                            KLog.d("already login")
+                            this@HomeFragment.articleAdapter.currentList[position].apply {
+                                if (collect) {
+                                    homeViewModel.unCollect(this.id)
+                                } else {
+                                    homeViewModel.collect(this.id)
+                                }
+                            }
+                        } else {
+                            KLog.d("current not login")
+                        }
+                    }
                 }
             }
         }
